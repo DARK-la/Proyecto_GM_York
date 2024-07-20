@@ -1,0 +1,9 @@
+
+local screenW, screenH = guiGetScreenSize()
+ventana = guiCreateWindow((screenW - 300) / 2, (screenH - 140) / 2, 300, 140, "¿Quiere jugar con?", false)
+guiWindowSetSizable(ventana, false)
+
+btnSi = guiCreateButton(0.65, 0.59, 0.25, 0.22, "Si", true, ventana)
+guiSetProperty(btnSi, "NormalTextColour", "FF41EB13")
+btnNo = guiCreateButton(0.11, 0.59, 0.25, 0.22, "No", true, ventana)
+guiSetProperty(btnNo, "NormalTextColour", "FFEA4613")

@@ -1,0 +1,37 @@
+<meta>
+    <info author="Dark" name="Sistema de Login" version="0.5"/>
+    
+
+    <!--  Cargamos utilidades,como barras negras,etc, lo primoridial -->
+      <script src="utils/utilidad.lua" type="client"/>
+      <script src="utils/config.lua" type="client"/>
+
+
+    
+      <!--  Cargamos ahora la cuenta prinicipal, el sistema de cuenta   -->
+     <script src="cuenta_principal/cliente_registro.lua" type="client"/>
+     <script src="cuenta_principal/cliente_cuenta.lua" type="client"/>
+    
+
+   	<script src="cuenta_principal/nucleo.lua" type="server"/>
+
+  
+    
+
+    <!--  Ahora cargamos el lobby para seleccionar el personaje  -->
+   
+    <script src="personaje_lobby/clientelobby.lua" type="client"/>
+    <script src="personaje_lobby/creacion_personaje.lua" type="client"/>
+
+     
+    <script src="personaje_lobby/servidorlobby.lua" type="server"/>
+
+
+    <file src="archivos/newaccount.png"/>
+    <file src="archivos/atras.png"/>
+    <file src="archivos/mano.png"/>
+   	<file src="archivos/DistantGalaxy.ttf"/>
+    <file src="cuenta_principal/formulario.html"/>
+    <file src="personaje_lobby/crearPJ.html"/>
+   	
+</meta>

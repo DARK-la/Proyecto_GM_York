@@ -1,0 +1,6 @@
+
+
+<meta>
+	 <info author="Dark" name="Iniciar Todo" version="1.0" />
+	 <script src="iniciar.lua" type="server"/>
+</meta>

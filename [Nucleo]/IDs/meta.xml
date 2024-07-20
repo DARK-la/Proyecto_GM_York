@@ -1,0 +1,7 @@
+<meta>
+    <info author="Dark" name="Sistema de IDs" version="1"/>
+    
+
+    <script src="ids.lua" type="server"/>
+
+</meta>

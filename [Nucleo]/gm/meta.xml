@@ -1,0 +1,22 @@
+<meta>
+   <info author="Dark" version="1.0"/>
+
+
+   
+
+
+   <script src="s.lua" type="server"/>
+
+
+   <script src="comandos/c.lua" type="client"/>
+   <script src="chat/chat.lua" type="server"/>
+
+   <script src="clienteconfig.lua" type="client"/>
+   <script src="nametag/nametag.lua" type="client"/>
+   
+   
+   
+   <export function="enviarMensajeLocal" type="server"/>
+
+
+</meta>

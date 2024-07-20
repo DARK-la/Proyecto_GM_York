@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Design by foolishdeveloper.com -->
+    <title></title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    overflow-y: hidden;
+}
+
+form{
+    width: 400px;
+    background-color: rgba(0,0,0,0.9);
+    position: absolute;
+    transform: translate(-50%,-50%) scale(0.95);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    border: 20px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 30px rgba(8,7,16,0.6);
+    padding: 10px 10px;
+}
+
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+
+
+.comboxList{
+    width: 100%;
+    padding: 20px;
+}
+
+
+select, option{
+  color: black;
+  font-size: 16px;
+}
+
+
+
+button{
+    display: inline-block;
+    margin-top: 20px;
+    width: 50%;
+    float: right;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 10px 0;
+   
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+#btnSendAll:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+    </style>
+</head>
+<body>
+  
+    <form>
+        <h2 style="text-align: center;">Nuevo Personaje.</h2>
+
+        <label for="Nombre">Nombre:</label>
+        <input type="text" placeholder="Primer Nombre:" id="Nombre" minlength="4" maxlength="25">
+
+        <label for="Apellido">Apellido:</label>
+        <input type="text" placeholder="Apellido:" id="Apellido" minlength="4" maxlength="25">
+
+         <label for="Edad">Edad:</label>
+        <input type="number" placeholder="Edad:" id="Edad" min="18" max="99">
+
+        <label for="Nacionalidad">Nacionalidad:</label>
+        <input type="text" placeholder="Lugar de origen:" id="Nacionalidad" minlength="4" maxlength="30">
+
+        <label for="Genero">Genero:</label>
+        <input type="text" placeholder="Hombre o Mujer:" id="Genero" minlength="4" maxlength="25">
+
+
+ 
+        
+        <button type="button" id="btnCrearPJ">Crear personaje</button>
+
+       
+    </form>
+
+
+    <script>
+
+         window.addEventListener("load", () =>{
+            
+            const buttonSendAll = document.getElementById("btnCrearPJ")
+
+
+             buttonSendAll.onclick = () => {
+
+                     const nombre = document.getElementById("Nombre").value
+                     const apellido = document.getElementById("Apellido").value
+                     const edad = document.getElementById("Edad").value
+                     const elgenero = document.getElementById("Genero").value
+                     const nacionalidad = document.getElementById("Nacionalidad").value
+
+                 
+                     mta.triggerEvent("new pj > client", nombre, apellido, edad, elgenero,nacionalidad  ) 
+                  
+             }
+         })
+    </script>
+
+
+
+
+
+
+</body>
+</html>
