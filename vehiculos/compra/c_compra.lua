@@ -27,6 +27,7 @@ function vistaAutoPrevia()
 		guiGridListAddColumn(gui.listaVehiculos, "Vehiculo", 0.5)
 		guiGridListAddColumn(gui.listaVehiculos, "Precio", 0.5)
 		llenarListaVeh(gui.listaVehiculos)
+		addEventHandler("onClientGUIClick",gui.btnComprarVehiculo,comprar)
 		showCursor(true)
 		else
 		 for _,elemento in pairs(gui) do
@@ -36,8 +37,15 @@ function vistaAutoPrevia()
 		 gui = {}
 	end
 
-	
+   
 end
 addCommandHandler("comprarveh",vistaAutoPrevia)
 
 
+
+function comprar()
+	local vehiculo = guiGridListGetItemText ( gui.listaVehiculos, guiGridListGetSelectedItem ( gui.listaVehiculos ), 1 )
+	if vehiculo then
+		 triggerServerEvent("onClientVehicleBuyS",resourceRoot,vehiculo)
+	end
+end

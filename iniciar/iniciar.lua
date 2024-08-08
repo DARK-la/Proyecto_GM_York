@@ -1,6 +1,6 @@
 
 local listaResources = {
-	"mysql","dm_api","gm","login"
+	"mysql","dm_api","notify","gm","login"
 }
 
 for _,recurso in ipairs(listaResources) do

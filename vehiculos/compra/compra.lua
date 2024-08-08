@@ -3,15 +3,18 @@ local VehiculosEnVenta = {480,422,482,478,567,412,576,603,475,402,581,509,462,52
 
 
 
-function nuevoVehiculoComprar(usuario,modelID)
-	local positionVeh = toJSON({getElementPosition(usuario)})
+function nuevoVehiculoComprar(vehicleName)
+	local positionVeh = toJSON({getElementPosition(client)})
 	local colorVeh = toJSON({ 0,0,0,0,0 })
-	
+   local modelID = getVehicleModelFromName (vehicleName) 
    if sql:queryFree("INSERT INTO `vehiculos` (vehicleID, positionVehicle, colorVehicle ,personajeId)  VALUES(?,?,?,?)",modelID, positionVeh, colorVeh,14 ) then
-      outputChatBox("Nuevo vehiculo creado")
+      outputChatBox("Vehiculo creado.")
+
+      iprint(positionVeh,colorVeh,modelID)
    end
 end
-
+addEvent("onClientVehicleBuyS",true)
+addEventHandler("onClientVehicleBuyS",resourceRoot,nuevoVehiculoComprar)
 
 
 

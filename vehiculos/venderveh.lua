@@ -74,6 +74,5 @@ function venderVehiculoServidor(player)
 	   outputChatBox("Vehiculo fue vendido a un precio razonable.",root,255,25)
 	end
     
-	
 end
 addCommandHandler("vender",venderVehiculoServidor)

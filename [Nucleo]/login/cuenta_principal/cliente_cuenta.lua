@@ -2,6 +2,7 @@ local cordenadasCamaraAleatoria = config.camaraPrincipales
 guiElementos = {} -- Lista para guardar los elementos
 local VelocidadJuego = 0.075
 miclavesita = false
+musicaFondo = nil
 
 
 function iniciarCliente()
@@ -56,7 +57,7 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
    setTimer(setCameraDrunkLevel,100,1,90)
    setWeather(2)
    setFarClipDistance(200)
-
+   musicaFondo = playSound("archivos/musica_login.mp3",true)
    setWaveHeight(2)
 
 
@@ -85,7 +86,7 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
 
         togButtonCreateNewAccount = guiCreateStaticImage(0.03, 0.02, 0.06, 0.10, ":login/archivos/newaccount.png", true)    
         addEventHandler("onClientGUIClick",togButtonCreateNewAccount,function()
-togVentanaRegistro("cuenta_principal/formulario.html")
+        togVentanaRegistro("cuenta_principal/formulario.html")
     end,false)
    end,1000,1)
 
@@ -113,7 +114,11 @@ function iniciarCuentaPrincipal(button, state)
             outputConsole("Informacion enviada al servidor...")
             triggerServerEvent("onLoginAccount",resourceRoot,dataCliente)
             guiSetEnabled(guiElementos.btnIniciarSesion,false)
-            setTimer(guiSetEnabled,2000,1,guiElementos.btnIniciarSesion,true)
+            setTimer(function(g)
+                if isElement(g.btnIniciarSesion) then
+                    guiSetEnabled(g.btnIniciarSesion,true)
+                end
+            end,800,1,guiElementos)
         end
     end
 end
@@ -139,6 +144,8 @@ function removerLoginPrincipal()
 
     destroyElement(togButtonCreateNewAccount)
     togButtonCreateNewAccount = nil
+    stopSound(musicaFondo)
+    musica_login = nil
    
 end
 
