@@ -1,15 +1,15 @@
 local x, y = guiGetScreenSize() 
 local colorGuardado = tocolor (0, 0, 0, 255)
 local COLORTEXTONametag = tocolor (255, 255, 255, 225)
-local NametagFuente = "default-bold"
-local HUESO = 6;
+local NametagFuente = "default-bold" 
+local HUESO = 2	;
 local COLOR_NOMBRE = "#FFFFFF"
 local vida = 0
 local distanciaMaxima = 7;
-local escalaFuente = y/720 
+local escalaFuente = (y/720) * 1.1
 local jugadoresNametag = {}
 local estaEscribiendo = false
-local myRenderTarget
+
 
 
 function dxDrawBorderedText (outline, text, left, top, right, bottom, color, scale, font, alignX, alignY, clip, wordBreak, postGUI, colorCoded, subPixelPositioning, fRotation, fRotationCenterX, fRotationCenterY)
@@ -64,7 +64,7 @@ function RenderNames()
            	return
            end
 		   
-		   local x1,y1,z1 = getScreenFromWorldPosition( p,p2,p3+0.35)
+		   local x1,y1,z1 = getScreenFromWorldPosition( p,p2,p3+0.25)
 		   
 	       if x1 and y1 then
    
@@ -72,9 +72,8 @@ function RenderNames()
 	       	local usuarioID = data[2]
 			local estaChateando = ( isChatBoxInputActive() and "..." or "" )
 
-            dxDrawBorderedText (0.5, estaChateando.."\n"..Nombre.." #ff9900｢"..usuarioID.."｣ ",x1,y1, x1, y1, tocolor(234,234,234,245),escalaFuente,NametagFuente,"center","center",false,true,false,true,true)
-		    
-	        end
+            dxDrawBorderedText (0.8, estaChateando.."\n"..Nombre.." #ff9900｢"..usuarioID.."｣ ",x1,y1, x1, y1, tocolor(234,234,234,245),escalaFuente,NametagFuente,"center","center",false,true,false,true,true)
+	      end
 	   end
     end
 end
@@ -92,6 +91,7 @@ function iniciarNameTag(usuario)
 end
 
 
+
 function initNameTag()
 
    for i, player in ipairs(getElementsByType("player"),true) do
@@ -99,9 +99,9 @@ function initNameTag()
 			iniciarNameTag(player)
 		end
 	end
+
 	addEventHandler("onClientRender",root,RenderNames) 
 
-	iprint(jugadoresNametag," -> nametags actuales")
 end
 
 

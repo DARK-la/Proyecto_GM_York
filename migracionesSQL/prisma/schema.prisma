@@ -8,19 +8,13 @@ datasource db {
 }
 
 
-
-enum CharacterClassEnum {
-  Civil
-  Policia
-  Medico
-}
-
 enum CharacterGenderEnum {
   Hombre
   Mujer
 }
 
 model cuenta_usuario {
+
 
   id Int @id @default(autoincrement())
 
@@ -38,8 +32,9 @@ model cuenta_usuario {
  
   createdAt  DateTime @default(now())
   lastOnline DateTime @default(now())
-
   characters personajes_datos[]
+
+
 }
 
 model personajes_datos {
@@ -51,7 +46,7 @@ model personajes_datos {
   firstName String
   lastName  String
   gender    CharacterGenderEnum @default(value: Hombre)
-  class     CharacterClassEnum  @default(value: Civil)
+  
   dead      Boolean             @default(value: false)
   age       Int                 @default(value: 18)
 
@@ -82,12 +77,10 @@ model vehiculos{
     engineState Boolean @default(value:false)
 
 
-
     locked Boolean @default(value:false)
     health Int @default(1000) @db.UnsignedSmallInt
-
     personajeId Int
-    vehFaction Int @default(value:0)
+    
 
     ownerCharacter personajes_datos @relation(fields: [personajeId], references: [id])
 }

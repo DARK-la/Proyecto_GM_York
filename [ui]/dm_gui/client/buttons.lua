@@ -360,3 +360,6 @@ addEventHandler('onClientRender', root, renderAllButtons)
 --   -- setButtonEnabled(button, false)
 --   setButtonFont(button, getUIFont('medium'), 0.76)
 -- end, 3000, 1)
+
+
+local mibiton = createButton(300, 200, 100, 50, "Jugar", false)

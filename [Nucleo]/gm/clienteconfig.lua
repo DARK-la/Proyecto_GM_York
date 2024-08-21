@@ -11,7 +11,7 @@ function initConfigCliente( ... )
     setWorldSoundEnabled(0, 29, false, true)
     setWorldSoundEnabled(0, 30, false, true)
 
-    addEventHandler('onClientPlayerRadioSwitch', getRootElement(), function() cancelEvent() end )
+    addEventHandler("onClientPlayerRadioSwitch", getRootElement(), function() cancelEvent() end )
 
 end
 addEventHandler("onClientResourceStart",resourceRoot,initConfigCliente,true,"low")

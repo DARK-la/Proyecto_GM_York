@@ -1,6 +1,6 @@
 local MYSQL_HOST = 'localhost'
 local MYSQL_PORT = 3306
-local MYSQL_DATABASE = 'mi_servidor_mta'
+local MYSQL_DATABASE = 'mi_db_servidor_mta'
 local MYSQL_USERNAME = 'root'
 local MYSQL_PASSWORD = ''
 

@@ -19,7 +19,7 @@ local CHARACTERS_DETAILS = {
 addEvent("api:onPlayerLogin", false)
 
 
-local MYSQL = exports.mysql
+
 local posInit = toJSON({-233.77873, 1209.26062, 19.74219,0,0})
 
 
@@ -29,14 +29,10 @@ local posInit = toJSON({-233.77873, 1209.26062, 19.74219,0,0})
 local function loadDataCharacterInAccount(usuario,ownerID,data) -- Guardamos cosas basicas en la cuenta array.
      
       AccountOnline[ownerID]["characterID"] = data.id
-      AccountOnline[ownerID]["moneyPlayer"] = data.moneyPlayer
       AccountOnline[ownerID]["age"] = data.age
       AccountOnline[ownerID]["skin"] = data.skin
-      AccountOnline[ownerID]["class"] = data.class
-      AccountOnline[ownerID]["bankPlayer"] = data.bankMoney
       AccountOnline[ownerID]["fname"] = data.firstName
       AccountOnline[ownerID]["lname"] = data.lastName
-
       
 end
 
@@ -97,7 +93,7 @@ function spawnGameCharacter(client, selectedCharacterID)
   
   
 
-  local character = MYSQL:query('SELECT id,positionPlayer,firstName,lastName,health,gender,ownerId,moneyPlayer,age,skin,class,bankMoney FROM `personajes_datos` WHERE `id` = ?', selectedCharacterID)[1]
+  local character = MYSQL:query('SELECT id,positionPlayer,firstName,lastName,health,gender,ownerId,moneyPlayer,age,skin,bankMoney FROM `personajes_datos` WHERE `id` = ?', selectedCharacterID)[1]
   if not character then return 'CLIENT_UNKNOWN_CHARACTER' end
 
 
@@ -129,6 +125,8 @@ function spawnGameCharacter(client, selectedCharacterID)
   local toIDCharacterNumber = character.id
   triggerEvent("api:onPlayerLogin",client,toIDCharacterNumber)
   loadDataCharacterInAccount(client,CID,character)
+
+  setMoney(client,character.moneyPlayer)
 
   return true,'CLIENT_CHARACTER_SPAWNED'
 end
@@ -167,21 +165,19 @@ function saveDataPlayer()
 
          local personajeSQLID = data.characterID
          local skinID = data.skin
-         local moneyCharacter = data.moneyPlayer
+         local moneyCharacter = getAmountMoney(source)
          local cuentaUsuario = data.username
          MYSQL:queryFree("UPDATE `personajes_datos` SET positionPlayer = ?, moneyPlayer = ?,  skin = ? WHERE id = ?",posPlayer,moneyCharacter,skinID,personajeSQLID)
          removeElementData(source,"account_server_id")
           
          AccountOnline[cID] = nil
+         cleanDataMoneySafe(source)
+
          local personajeNombreUsuario = getPlayerName(source)
          print(personajeNombreUsuario," -> salio del servidor cuenta: ",cuentaUsuario)
     end
 end
 addEventHandler("onPlayerQuit",root,saveDataPlayer)
-
-
-
-
 
 
 function createGameCharacterServer(client,data)

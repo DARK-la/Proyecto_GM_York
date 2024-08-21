@@ -4,8 +4,11 @@ VehiculosJugadores = {}
 DatosVehiculos = {}
 
 
-
-
+function table.size(tab)
+    local length = 0
+    for _ in pairs(tab) do length = length + 1 end
+    return length
+end
 
 
 function onVehicleLoadStart()
@@ -60,6 +63,7 @@ addEventHandler("onResourceStop",resourceRoot,onVehicleStopSave)
 
 
 
+
 function initLoginPlayer(toIDCharacterNumber)
 
    
@@ -79,14 +83,18 @@ addEventHandler("api:onPlayerLogin",root,initLoginPlayer)
 
 function spawnVehiclePlayer(arrayVehicleData)
 
-
+    
  
+    local longitud = table.size(arrayVehicleData) 
 
-    for i=1,#arrayVehicleData do
-        
+
+
+    for i=1,longitud do
         local vehData = arrayVehicleData[i]
-        local idCharacterPlayer = vehData.personajeId
 
+
+        local idCharacterPlayer = vehData.personajeId
+        
         if not VehiculosJugadores[idCharacterPlayer] then
                VehiculosJugadores[idCharacterPlayer] = {}
         end
@@ -95,8 +103,6 @@ function spawnVehiclePlayer(arrayVehicleData)
 
         local vehCreado = createVehicle(vehData.vehicleID,pos[1],pos[2],pos[3]) 
         setElementRotation(vehCreado,pos[4],pos[5],pos[6])
-		
-		
 		
 		
 		
@@ -127,9 +133,8 @@ function spawnVehiclePlayer(arrayVehicleData)
         if type(vehiculoSalud) == "number" and vehiculoSalud >= 0 then
             setElementHealth(vehCreado,vehiculoSalud)
         end
-       
+
     end
-    
 	
  end
 

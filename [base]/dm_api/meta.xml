@@ -6,10 +6,17 @@
 
    <!-- server api -->
   <script src='server/main.lua' type='server' />
+  <script src='server/playerDataMoney.lua' type='server' />
+
+
 
   <!-- accounts & characters -->
   <script src='server/accounts.lua' type='server' />
   <script src='server/characters.lua' type='server' />
+
+ 
+
+  
 
 
 
@@ -27,6 +34,9 @@
   <export function='createGameCharacterServer' type='server' />
   <export function='isLoggedAccount' type='server' />
   <export function='getIdPlayerCharacter' type='server' />
+
+
+
 
  
 </meta>

@@ -43,6 +43,8 @@ function sellVehicle(pid,veh)
 		  end
 		  
 		  local globalIDVeh = DatosVehiculos[userDataVehicle].vid
+
+		  iprint(globalIDVeh, " fue eliminado")
 		  
 		  
 		  

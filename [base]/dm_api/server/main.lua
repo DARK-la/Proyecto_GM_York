@@ -1,6 +1,6 @@
 
 AccountOnline = {}
-
+MYSQL = exports.mysql
 
 
 function validarNombre(nombre)

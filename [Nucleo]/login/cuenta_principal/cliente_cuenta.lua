@@ -10,20 +10,12 @@ function iniciarCliente()
     addEvent("onIniciarSesionLogin",true)
     addEventHandler("onIniciarSesionLogin",root,iniciarInicioDeSesionPrincipal)
 
-    
-
-
-
-     
 
     addEvent("onLobby",true)
     addEventHandler("onLobby",root,IniciarLobbyCliente)
 
     addEvent("onRemoverTodoLobby",true)
     addEventHandler("onRemoverTodoLobby",root,removerTodoLobbyPersonajes)
-
-
-   
   
     triggerServerEvent("onPreLoginCliente",resourceRoot,localPlayer)
 end
@@ -52,15 +44,12 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
    showCursor(true)
    showChat(false)
    setPlayerHudComponentVisible("all",false)
-   setTime(20,5)
+   setTime(19,50)
    setGameSpeed(VelocidadJuego)
    setTimer(setCameraDrunkLevel,100,1,90)
    setWeather(2)
    setFarClipDistance(200)
-   musicaFondo = playSound("archivos/musica_login.mp3",true)
-   setWaveHeight(2)
-
-
+   --musicaFondo = playSound("archivos/musica_login.mp3",true)
    local randomPosCamera = cordenadasCamaraAleatoria[math.random(1,#cordenadasCamaraAleatoria)]
 
   
@@ -83,14 +72,12 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
         guiSetFont(guiElementos.btnIniciarSesion,"default-bold-small")
         addEventHandler ( "onClientGUIClick",  guiElementos.btnIniciarSesion, iniciarCuentaPrincipal,false )
 
-
         togButtonCreateNewAccount = guiCreateStaticImage(0.03, 0.02, 0.06, 0.10, ":login/archivos/newaccount.png", true)    
         addEventHandler("onClientGUIClick",togButtonCreateNewAccount,function()
         togVentanaRegistro("cuenta_principal/formulario.html")
     end,false)
    end,1000,1)
 
-    
   
 end
 
@@ -111,12 +98,14 @@ function iniciarCuentaPrincipal(button, state)
 
         if #user >= 3 and #clave >= 3 then
             local dataCliente = { username = user, password = encodeString("rsa",clave,{key = miclavesita}) }
-            outputConsole("Informacion enviada al servidor...")
+            outputConsole("Informacion enviada al servidor.")
             triggerServerEvent("onLoginAccount",resourceRoot,dataCliente)
             guiSetEnabled(guiElementos.btnIniciarSesion,false)
             setTimer(function(g)
                 if isElement(g.btnIniciarSesion) then
-                    guiSetEnabled(g.btnIniciarSesion,true)
+                    if isElement(g.btnIniciarSesion) then
+                        guiSetEnabled(g.btnIniciarSesion,true)
+                    end
                 end
             end,800,1,guiElementos)
         end

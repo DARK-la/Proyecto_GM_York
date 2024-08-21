@@ -61,7 +61,16 @@ notifications.padding = 10
 notifications.offset = 600 * relativeScale
 notifications.offsetWidth = 5
 -- TEXT
-notifications.font = "default-bold"
+
+
+
+local fuenteNotify = dxCreateFont("Lato-Regular.ttf", 12, false, 'proof') or "default-bold"
+
+
+
+
+
+notifications.font = fuenteNotify
 notifications.fontScale = 1 * relativeFontScale
 notifications.fontHeight = dxGetFontHeight(notifications.fontScale,notifications.font)
 
@@ -233,3 +242,7 @@ function dxDrawStartCurvedRectangle(x, y, width, height, color, postGUI)
 		dxDrawImageSection(x + edgeSize, y, width, height, 33, 0, 10, 66, "img/startedge.png", 0, 0, 0, color, postGUI)
 	end
 end
+
+
+
+

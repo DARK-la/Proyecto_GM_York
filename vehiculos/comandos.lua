@@ -98,17 +98,18 @@ function motorVehiculo(p)
 
     local veh = isVehicleOwnerNear(p)	
 	
-	local tipoEstadoMotor = not getVehicleEngineState(veh) == true and "encendio" or "apagar"
+	local tipoEstadoMotor = not getVehicleEngineState(veh) == true and "enciende" or "apaga"
 	local ms = not getVehicleEngineState(veh) == true and 3200 or 500
 	
-
+     
 	exports["gm"]:enviarMensajeLocal(p,""..tipoEstadoMotor.." su motor del vehiculo",1)
+
+	if  getVehicleEngineState(veh) then
+		setVehicleEngineState(veh, false)
+	else
+		setTimer(setVehicleEngineState,math.random(1000,2500),1,veh,true)
+	end
 	
-	setTimer(function()
-	    setVehicleEngineState(veh, not getVehicleEngineState(veh))
-	end,math.random(500,3000)  ,1)
-	 
-	 
 	
 end
 addCommandHandler("motor",motorVehiculo)
