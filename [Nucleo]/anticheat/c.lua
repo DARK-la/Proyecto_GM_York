@@ -1,13 +1,17 @@
 local renderActivo = false
+local DETECT_JETPACK = true
 
 
 
-setTimer(function()
-	local tieneJetPack = isPedWearingJetpack (localPlayer) 
-    if tieneJetPack  then
-      -- triggerServerEvent("onHasJetPackPlayer",resourceRoot)
-    end
-end,5000,0)
+if DETECT_JETPACK then
+	setTimer(function()
+		local tieneJetPack = isPedWearingJetpack (localPlayer) 
+		if tieneJetPack  then
+		  triggerServerEvent("onHasJetPackPlayer",resourceRoot)
+		end
+	end,7000,0)
+end
+
 
 
 
@@ -80,6 +84,11 @@ function palabrasNoPermitidas(text)
    end
 end
 addEventHandler("onClientPaste",root,palabrasNoPermitidas)
+
+
+
+
+
 
 
 --[[

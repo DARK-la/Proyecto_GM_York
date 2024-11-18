@@ -1,13 +1,60 @@
 api = exports["dm_api"]
-
-
 local t1,t2 = 8,0
 local privateKey, publicKey = generateKeyPair("rsa", { size = 2048 })
 setTime(t1,t2)
 print("Tiempo servidor sync en cliente: ",t1,t2)
 
 
-local function iniciarLoginPrincipal()
+FloodAccount = {}
+local LIMIT_FLOOD_SPAM = 14
+
+
+
+
+
+addEventHandler("onPlayerQuit",root,function()
+    if FloodAccount[source] then
+	   FloodAccount[source] = nil
+	end
+
+end)
+
+function detectFloodSpam(player,toBanPlayer)
+
+   
+    local ban = (type(toBanPlayer) == "boolean")
+	
+	
+	
+	
+    if not FloodAccount[player] then
+        FloodAccount[player] = 0
+    end
+    
+	local AttempsToLogin =  FloodAccount[player]
+    FloodAccount[player] = AttempsToLogin + 1
+    
+	 iprint(FloodAccount)
+	
+	if FloodAccount[player] >= LIMIT_FLOOD_SPAM then
+	   
+	   
+	 
+	   if ban then
+	       banPlayer(client,true,false,true,"Consola","¡UPS algo salio mal!", math.random(30,60))
+		  
+        else
+		  kickPlayer(player,"¡Vaya revisa tus datos que sean los correctos, intentalo mas tarde!")
+	   end
+	   
+	  
+	   FloodAccount[player] = nil
+	   return true
+	end
+end
+
+
+function iniciarLoginPrincipal()
 
     
 
@@ -40,22 +87,35 @@ addEventHandler("onPreLoginCliente",root,iniciarLoginPrincipal)
 
 
 function LogearCuentaPrincipal(dataUser)
+   
+   
+   if not isElement(client) or getElementType(client) ~= "player" then
+      return
+   end
+   
+     
+    detectFloodSpam(client) 
 
-   outputConsole("Vertificando datos del cliente...",client)
+
+   
    local claveDecodificada = getPasswordSafe(dataUser.password)
    dataUser.password = claveDecodificada
 
-
    local message,charactersArray = api:loginGameAccount(client,dataUser)
+
      if message == "CLIENT_LOGIN_SUCCESS" then
         triggerClientEvent(client,"onLobby",client,charactersArray)
+		FloodAccount[client] = nil  -- Reseteamos el puntero de intentos de spam para evitar bugs en la crecion de personjes
+		
         outputConsole("Inicio de sesion exitoso todo correcto.",client)
      else
-        outputConsole("Hubo un error grave en la informacion.",client)
+		if isElement(client) then
+		   outputConsole("Hubo un error al momento de obtener los datos",client)
+		end
      end
 
-
-    exports.notify:showMessagePlayer(client,message,true)
+    
+    exports.notify:showMessagePlayer(client,tostring(message),true)
 end
 addEvent("onLoginAccount",true)
 addEventHandler("onLoginAccount",resourceRoot,LogearCuentaPrincipal)
@@ -88,8 +148,18 @@ end
 
 
 
-local function crearCuentaServidor(data)
-    
+function crearCuentaServidor(data)
+
+    if not client then 
+	   return 
+	end
+	
+	
+	
+    detectFloodSpam(client,true)
+	 
+	 
+	 
     local claveDecodificada = getPasswordSafe(data.password)
     local claveDecodificada_repeat = getPasswordSafe(data.password_repeat)
 
@@ -101,13 +171,13 @@ local function crearCuentaServidor(data)
         exports.notify:showMessagePlayer(client,message,"info",true)
         if message == "CLIENT_ACCOUNT_CREATED" then
             triggerClientEvent(client,"onCloseWebRegister",client)
+			
         end
     end
     
 end
 addEvent("onCreatedAccountGame",true)
 addEventHandler("onCreatedAccountGame",resourceRoot,crearCuentaServidor)
-
 
 
 

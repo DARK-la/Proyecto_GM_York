@@ -1,0 +1,20 @@
+<meta>
+  
+  
+  <script src="data/propiedadFunc.lua" type="server"/>
+  <script src="data/funcData.lua" type="server"/>
+  <script src="cmd/cmd.lua" type="server"/>
+  
+  
+  <script src="util.lua" type="server"/>
+  <script src="init.lua" type="server"/>
+  
+  
+  <script src="eventos.lua" type="server"/>
+  
+  <script src="data/client.lua" type="client"/>
+  
+  
+  <script src="maletero/maletero.lua" type="server"/>
+
+</meta>

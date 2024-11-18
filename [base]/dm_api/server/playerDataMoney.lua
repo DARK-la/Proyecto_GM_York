@@ -20,6 +20,20 @@ function securityParams(player, motonDinero)
 end
 
 
+
+
+function increaseMoney(player,amountNew)
+   local dineroActual = getAmountMoney(player) 
+   
+   if type(amountNew) == "number" and amountNew > 0 then
+      
+	   local nuevoDinero =  dineroActual + amountNew 
+	   PlayerMoneyData[player].money = nuevoDinero
+	   setPlayerMoney(player,nuevoDinero,true)
+   end
+end
+
+
 function setMoney(p, moton )
 
     if not securityParams(p,moton) then
@@ -54,10 +68,13 @@ function cleanDataMoneySafe(p)
     
    
     PlayerMoneyData[p] = nil
-   
 end
 
 
 
-
+function seeMoneySelf(p)
+   local cantidad = getAmountMoney(p) or "Nada"
+   outputChatBox("Tienes un total de #0da625$"..cantidad,p,255,255,255,true)
+end
+addCommandHandler("verdinero",seeMoneySelf)
 

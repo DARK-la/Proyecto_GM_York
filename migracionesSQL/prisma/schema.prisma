@@ -80,7 +80,7 @@ model vehiculos{
     locked Boolean @default(value:false)
     health Int @default(1000) @db.UnsignedSmallInt
     personajeId Int
-    
+    placaAuto String @db.VarChar(9)
 
     ownerCharacter personajes_datos @relation(fields: [personajeId], references: [id])
 }

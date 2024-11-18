@@ -28,14 +28,13 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
     ArchivosData.FUENTE_LETRA = dxCreateFont(':Login/archivos/DistantGalaxy.ttf', 18, false, 'draft') 
     ArchivosData.ImagenCursorMano = dxCreateTexture( ":Login/archivos/mano.png" ) 
     
-    
    
     
     miclavesita = claveServerPublica
 
 
     
-    local tiempoAleatorio = math.random(1.3,2.5) * 1000
+    local tiempoAleatorio = math.random(1,2) * 300
     fadeCamera(true,1.0)
 
     addEventHandler("onClientRender",root,LOGO_RENDER_PRINCIPAL)
@@ -44,12 +43,12 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
    showCursor(true)
    showChat(false)
    setPlayerHudComponentVisible("all",false)
-   setTime(19,50)
+   setTime(20,0)
    setGameSpeed(VelocidadJuego)
    setTimer(setCameraDrunkLevel,100,1,90)
    setWeather(2)
    setFarClipDistance(200)
-   --musicaFondo = playSound("archivos/musica_login.mp3",true)
+   musicaFondo = playSound("archivos/musica_login.mp3",true)
    local randomPosCamera = cordenadasCamaraAleatoria[math.random(1,#cordenadasCamaraAleatoria)]
 
   
@@ -78,7 +77,6 @@ function iniciarInicioDeSesionPrincipal(claveServerPublica)
     end,false)
    end,1000,1)
 
-  
 end
 
 
@@ -137,5 +135,4 @@ function removerLoginPrincipal()
     musica_login = nil
    
 end
-
 

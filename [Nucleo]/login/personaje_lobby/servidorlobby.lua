@@ -40,7 +40,7 @@ function iniciarLoginPersonaje(MiPersonajeID)
 
 end
 addEvent("onLoginPersonaje",true)
-addEventHandler("onLoginPersonaje",root,iniciarLoginPersonaje)
+addEventHandler("onLoginPersonaje",resourceRoot,iniciarLoginPersonaje)
 
 
 
@@ -49,6 +49,11 @@ addEventHandler("onLoginPersonaje",root,iniciarLoginPersonaje)
 
 
 function newPlayerCharacterServer(dataClient)
+
+
+    detectFloodSpam(client)
+	
+	
     local messageCharacter =  api:createGameCharacterServer(client,dataClient)
 
     if messageCharacter and messageCharacter ~= nil then

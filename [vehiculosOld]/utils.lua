@@ -123,3 +123,26 @@ end
 
 
 
+
+
+function valueVehicleModify(p,veh,type,value)
+
+       if not haveVehiclePlayer(p) then
+	     return
+	   end
+	   
+	  
+	   DatosVehiculos[veh][type] = value;
+	   return true
+end
+
+
+function getVehicleDataPersonal(p,veh,type)
+
+       if not haveVehiclePlayer(p) then
+	     return
+	   end
+	   
+	  
+	   return DatosVehiculos[veh][type] 
+end

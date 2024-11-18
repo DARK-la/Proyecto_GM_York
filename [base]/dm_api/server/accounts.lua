@@ -11,7 +11,7 @@ local ACCOUNT_DETAILS = {
   }
 }
 local VERIFY_ACCOUNT_SERIAL = true
-local MAX_ACCOUNTS_PER_SERIAL = 3
+local MAX_ACCOUNTS_PER_SERIAL = 1
 
 
 --addEvent('api:onPlayerLogged', true)
@@ -30,10 +30,16 @@ function createGameAccount(client, data)
   
   if VERIFY_ACCOUNT_SERIAL then
 
-    local cantidadCuentas = MYSQL:query("SELECT `id` from `cuenta_usuario` WHERE serial = ?",serialUsuario)
-    if #cantidadCuentas >= MAX_ACCOUNTS_PER_SERIAL then
-      return 'CLIENT_ACCOUNTS_LIMIT_REACHED'
-    end
+    local SQLCantidadCuentas = MYSQL:query("SELECT COUNT(ID) from `cuenta_usuario` WHERE serial = ?",serialUsuario)
+	
+	if not SQLCantidadCuentas[1] then
+	end
+	
+	local cantidadCuentasCreadasActuales  =  SQLCantidadCuentas[1]["COUNT(ID)"]
+	
+	if cantidadCuentasCreadasActuales >=MAX_ACCOUNTS_PER_SERIAL then
+	   return "CLIENT_ACCOUNTS_LIMIT_REACHED"
+     end	
   end
 
   -- checking if username or email is already taken & making sure is everything perfect
@@ -75,18 +81,22 @@ function createGameAccount(client, data)
   return 'CLIENT_UNKNOWN_ERROR'
 end
 
+
 function loginGameAccount(client, data)
-  if not client or not getElementType(client) == 'player' then return 'GAME_CLIENT_UNIDENTIFIED' end
 
+
+  if not isElement(client) or not getElementType(client) == 'player' then return 'GAME_CLIENT_UNIDENTIFIED' end
   
-  local account = MYSQL:query('SELECT * FROM `cuenta_usuario` WHERE BINARY `username` = ? LIMIT 1', data.username)[1]
-  if account then
-    if VERIFY_ACCOUNT_SERIAL then
-      if not account.serial == serial then
-        return 'CLIENT_INVALID_SERIAL_NOT_SAME'
-      end
-    end
-
+  
+  local dataQuerySQL = MYSQL:query('SELECT id,password,username FROM `cuenta_usuario` WHERE BINARY `username` = ? LIMIT 1', data.username)
+  
+  local isDataNotValid = ( type(dataQuerySQL[1]) ~= "table" )
+  local account = dataQuerySQL[1]
+  
+  
+	  if isDataNotValid then
+		 return "CLIENT_ACCOUNT_NOT_EXISTS"
+	  end
 
 
    --[[ if AccountOnline[account.id] then
@@ -105,20 +115,16 @@ function loginGameAccount(client, data)
 
        local dataCharacter = MYSQL:query("SELECT id,firstName,lastName,skin,ownerId FROM `personajes_datos` WHERE ownerId = ?", account.id )
 
-
         AccountOnline[tonumber(account.id)] = {
-              ["role"] = account.role,
-              ["username"] = account.username,
+            ["username"] = account.username
         }
-
-      
 
       triggerEvent('api:onLoginAccount', resourceRoot, client)
       setElementData(client,"account_server_id",account.id,false)
-
+     
       return 'CLIENT_LOGIN_SUCCESS', dataCharacter
     else return 'CLIENT_ACCOUNT_INVALID_PASSWORD' end
-  else return 'CLIENT_ACCOUNT_NOT_EXISTS' end
+ 
 
   return 'CLIENT_UNKNOWN_ERROR'
 end
@@ -132,6 +138,21 @@ function isLoggedAccount(p)
 
      return false
 end
+
+
+
+function getNameFullCharacter(p)
+
+    if not isLoggedAccount(p) then
+	  return
+	end
+	
+	
+	local idCuentaUsuario = getElementData(p,"account_server_id")
+	local data = AccountOnline[idCuentaUsuario]
+	
+	return data.fname, data.lname
+end 
 
 
 
@@ -149,5 +170,6 @@ function findPlayerByAccountId(accountId)
 
   return nil
 end
+
 
 

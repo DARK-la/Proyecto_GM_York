@@ -15,7 +15,7 @@ local colors = {
 
 
 local ListaMensajes = {
-
+  ["CLIENT_USERNAME_ALREADY_TAKEN"] = "#F97D4E¡Intenta con otro nombre de usuario!",
   ["CLIENT_ACCOUNT_INVALID_PASSWORD"] = "#F97D4E¡Error en los datos ingresados!",
   ["CLIENT_ACCOUNT_NOT_EXISTS"] = "#B35D3F¡UPS!, revisa los datos hubo un error.",
   ["CLIENT_LOGIN_SUCCESS"] = "¡Bienvenido!",

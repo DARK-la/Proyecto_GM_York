@@ -73,7 +73,7 @@ addCommandHandler("spawnear",spawnearUsuarioComando)
 local LIMITED_COMMANDS = {
     ["gpsveh"] = 2.5,
     ["motor"] = 4,  
-    ["lock"] = 2.3,
+    ["lock"] = 1.5,
     ["maletero"] = 2,
     ["vermaletero"] = 2,
     
@@ -97,8 +97,8 @@ addEventHandler("onPlayerCommand", root, function(cmd)
     if EXEC[source][cmd] + (limit_sec * 1000) > tick then
         cancelEvent()
         local tiempoRestante = (EXEC[source][cmd] + (limit_sec * 1000) - tick) / (1000  + 1)
-        local formateado = math.ceil(tiempoRestante)
-        return outputChatBox("Limite de #edad21"..formateado.." #FFFFFFsegundos para este comando.", source, 255, 255, 255, true)
+        local tiempoFormateado = tostring(math.ceil(tiempoRestante))
+        return outputChatBox("Espera#FF4500 "..tiempoFormateado.." #FFFFFFsegundos para este comando.", source, 255, 255, 255, true)
     end
     EXEC[source][cmd] = tick
 end)

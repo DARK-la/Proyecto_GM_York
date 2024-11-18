@@ -1,3 +1,8 @@
+
+
+
+
+
 function traerVehiculoPersonal(p,_,personajeID,slot)
 
    if personajeID and slot then
@@ -15,15 +20,17 @@ function traerVehiculoPersonal(p,_,personajeID,slot)
    	    if vehData then
 
    	    	local veh = vehData
-
    	    	local x,y,z = getElementPosition(p)
    	    	local rx,ry,rz = getElementRotation ( p ) 
-
    	    	setElementPosition(veh,x+2,y+2,z+1)
    	    	setElementRotation(veh,rx,ry,rz)
+			local vehModel = getVehicleName(veh)
+			
 
-
-   	    	outputChatBox(inspect(vehData))
+			
+   	    	outputChatBox("#f3a450"..vehModel.." #fafafafue traido a tu posición.",p,255,255,255,true)
+			
+			
    	    end
 
 
@@ -103,6 +110,7 @@ function motorVehiculo(p)
 	
      
 	exports["gm"]:enviarMensajeLocal(p,""..tipoEstadoMotor.." su motor del vehiculo",1)
+	valueVehicleModify(p,veh,"motor", getVehicleEngineState(veh) == true and 1 or 0 )
 
 	if  getVehicleEngineState(veh) then
 		setVehicleEngineState(veh, false)
@@ -110,6 +118,10 @@ function motorVehiculo(p)
 		setTimer(setVehicleEngineState,math.random(1000,2500),1,veh,true)
 	end
 	
+	
+	
+	
+	outputChatBox(tostring(inspect(DatosVehiculos)))
 	
 end
 addCommandHandler("motor",motorVehiculo)

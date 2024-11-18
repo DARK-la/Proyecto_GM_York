@@ -1,7 +1,7 @@
 local x, y = guiGetScreenSize() 
 local colorGuardado = tocolor (0, 0, 0, 255)
 local COLORTEXTONametag = tocolor (255, 255, 255, 225)
-local NametagFuente = "default-bold" 
+local NametagFuente = "default-bold"
 local HUESO = 2	;
 local COLOR_NOMBRE = "#FFFFFF"
 local vida = 0
@@ -51,6 +51,8 @@ function RenderNames()
     local camx,camy,camz = getCameraMatrix()
   
 	for v,data in pairs(jugadoresNametag) do
+	
+	    if v == localPlayer then return end
 	   
         local x,y,z = getElementPosition(v)
 		local distancia = getDistanceBetweenPoints3D ( x,y,z, camx,camy,camz )
@@ -72,7 +74,7 @@ function RenderNames()
 	       	local usuarioID = data[2]
 			local estaChateando = ( isChatBoxInputActive() and "..." or "" )
 
-            dxDrawBorderedText (0.8, estaChateando.."\n"..Nombre.." #ff9900｢"..usuarioID.."｣ ",x1,y1, x1, y1, tocolor(234,234,234,245),escalaFuente,NametagFuente,"center","center",false,true,false,true,true)
+            dxDrawBorderedText (0.8, estaChateando.."\n"..Nombre.." #ff9900｢"..usuarioID.."｣ ",x1,y1, x1, y1, tocolor(234,234,234,245),escalaFuente,NametagFuente,"center","center",false,true,false,true,false)
 	      end
 	   end
     end
@@ -87,7 +89,7 @@ end
 
 function iniciarNameTag(usuario)
 	local usuarioNombre = string.gsub( getPlayerName(usuario),"_"," ")
-	jugadoresNametag[usuario] = { usuarioNombre,"#" }
+	jugadoresNametag[usuario] = { usuarioNombre,"1" }
 end
 
 
@@ -108,9 +110,10 @@ end
 
 
 function startNameTagCliente( ... )
+   
 	 initNameTag()
 end
---addEventHandler("onClientResourceStart",resourceRoot,startNameTagCliente)
+addEventHandler("onClientResourceStart",resourceRoot,startNameTagCliente)
 
 
 

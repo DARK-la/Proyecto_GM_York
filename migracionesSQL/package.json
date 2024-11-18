@@ -7,5 +7,22 @@
     "@prisma/client": "^4.14.1",
     "mysql2": "^3.3.2",
     "prisma": "^4.16.2"
-  }
+  },
+  "description": "Genera las tablas de SQL",
+  "dependencies": {
+    "denque": "^2.1.0",
+    "generate-function": "^2.3.1",
+    "iconv-lite": "^0.6.3",
+    "is-property": "^1.0.2",
+    "long": "^5.2.3",
+    "lru-cache": "^8.0.5",
+    "named-placeholders": "^1.1.3",
+    "safer-buffer": "^2.1.2",
+    "seq-queue": "^0.0.5",
+    "sqlstring": "^2.3.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dark"
 }

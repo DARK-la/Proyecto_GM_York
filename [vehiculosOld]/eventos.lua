@@ -13,6 +13,17 @@ addEventHandler ( "onVehicleStartEnter", root, eventoEntrarVehiculo )
 function VehiculoMotorDetectar ( thePlayer, seat, jacked ) 
     if source and getElementType(source) == "vehicle" and thePlayer then
 	    
+		
+	   if not DatosVehiculos[source] then
+		    return
+		 end
+        
+		
+		local data = DatosVehiculos[source]
+		
+		if data.motor == 0 then
+		   setVehicleEngineState(source,false)
+		end
 	end  
 end
 addEventHandler ( "onVehicleEnter", getRootElement(), VehiculoMotorDetectar ) 

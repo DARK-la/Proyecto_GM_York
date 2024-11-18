@@ -33,7 +33,9 @@
   <export function='getAllGameCharacters' type='server' />
   <export function='createGameCharacterServer' type='server' />
   <export function='isLoggedAccount' type='server' />
+  
   <export function='getIdPlayerCharacter' type='server' />
+   <export function='getNameFullCharacter' type='server' />
 
 
 

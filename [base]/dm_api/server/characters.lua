@@ -37,6 +37,23 @@ local function loadDataCharacterInAccount(usuario,ownerID,data) -- Guardamos cos
 end
 
 
+function isLoggedCharacter(ownerGlobalId)
+
+      if type(ownerGlobalId) ~= "number"  then
+	     return false
+	  end
+	  
+      if not AccountOnline[ownerGlobalId] then
+	     return false
+	  end
+	  
+	  if not AccountOnline[ownerGlobalId]["characterID"] then
+	     return false
+	  end
+	  
+	  return true 
+end
+
 
 
 function getIdPlayerCharacter(p)
@@ -69,6 +86,7 @@ function getAllGameCharacters(client)
 
 
   local characters = MYSQL:query(string.format('SELECT id FROM `personajes_datos` WHERE `ownerId` = ? LIMIT %d', MAX_CHARACTERS_PER_ACCOUNT), owner)
+  
   if #characters > 0 then
     return characters
   end
@@ -84,7 +102,7 @@ function spawnGameCharacter(client, selectedCharacterID)
 
 
   -- gathering current player data
-
+  
   
   if not isLoggedAccount(client) then
      kickPlayer(client,"¡Algo anda mal con tu cuenta!")
@@ -92,17 +110,27 @@ function spawnGameCharacter(client, selectedCharacterID)
   end
   
   
+  
+  local _,CID = isLoggedAccount(client) -- Obtenemos la cuenta del ID del pibe
 
+   if isLoggedCharacter(CID) then
+      kickPlayer(client,"¡EPA!, No hagas eso.")
+      return
+   end
+  
+  
+  
+   
   local character = MYSQL:query('SELECT id,positionPlayer,firstName,lastName,health,gender,ownerId,moneyPlayer,age,skin,bankMoney FROM `personajes_datos` WHERE `id` = ?', selectedCharacterID)[1]
   if not character then return 'CLIENT_UNKNOWN_CHARACTER' end
 
 
 
-  local _,CID = isLoggedAccount(client) -- Obtenemos la cuenta del ID del pibe
+ 
  
 
   if CID ~= character.ownerId then
-     kickPlayer(client,"¡UPS!, Error al sincronizar tus personajes en la cuenta.")
+     kickPlayer(client,"¡UPS!, Error fatal al obtener al vertificar tu cuenta.")
      return
   end
 
@@ -123,11 +151,11 @@ function spawnGameCharacter(client, selectedCharacterID)
   setPlayerName (client,fullNameCharacter)
 
   local toIDCharacterNumber = character.id
-  triggerEvent("api:onPlayerLogin",client,toIDCharacterNumber)
+  
   loadDataCharacterInAccount(client,CID,character)
 
   setMoney(client,character.moneyPlayer)
-
+  triggerEvent("api:onPlayerLogin",client,toIDCharacterNumber)
   return true,'CLIENT_CHARACTER_SPAWNED'
 end
 
@@ -173,6 +201,7 @@ function saveDataPlayer()
          AccountOnline[cID] = nil
          cleanDataMoneySafe(source)
 
+
          local personajeNombreUsuario = getPlayerName(source)
          print(personajeNombreUsuario," -> salio del servidor cuenta: ",cuentaUsuario)
     end
@@ -182,8 +211,7 @@ addEventHandler("onPlayerQuit",root,saveDataPlayer)
 
 function createGameCharacterServer(client,data)
 
-  if not client or not getElementType(client) == 'player' then 
-  
+  if not isElement(client) or not getElementType(client) == 'player' then 
       return 'GAME_CLIENT_UNIDENTIFIED'
    end
 

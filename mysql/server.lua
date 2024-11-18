@@ -1,6 +1,6 @@
 local MYSQL_HOST = 'localhost'
 local MYSQL_PORT = 3306
-local MYSQL_DATABASE = 'mi_db_servidor_mta'
+local MYSQL_DATABASE = 'servidormta;'
 local MYSQL_USERNAME = 'root'
 local MYSQL_PASSWORD = ''
 
@@ -68,6 +68,8 @@ function queryAsync(trigger, arguments, ...)
   if not connection then return end
 
   local safe = dbPrepareString(connection, ...)
+ 
+ 
 
   if safe then
     local function callback(query, ...)
@@ -87,7 +89,6 @@ function queryAsync(trigger, arguments, ...)
     local query = dbQuery(callback, {trigger, unpack(arguments)}, connection, safe)
     if not query then
       print(string.format('%s: %s', 'Error while async querying', 'mysql', select(1, ...)))
-
       return false
     end
 

@@ -23,6 +23,9 @@ local function getValueRandomTable(t)
     return t[math.random(1,#t)] 
 end
 
+
+
+
 function getSkinRandomGender(g)
     if g == "Hombre" then
         return getValueRandomTable(maleSkin)
@@ -38,3 +41,5 @@ end
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
+
+
